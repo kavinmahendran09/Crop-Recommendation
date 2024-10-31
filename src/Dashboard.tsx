@@ -2,13 +2,12 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css'; // Import Bootstrap icons
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Row, Col, Card, ListGroup } from 'react-bootstrap';
-import { FaChartLine, FaBox, FaUser, FaClipboardList, FaCog} from 'react-icons/fa';
-import { Bar } from 'react-chartjs-2'; // Import the Bar chart component
+import { FaChartLine, FaUser, FaClipboardList} from 'react-icons/fa';
+import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Register the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Dashboard: React.FC = () => {
@@ -19,7 +18,6 @@ const Dashboard: React.FC = () => {
         return <div>No data to display</div>;
     }
 
-    // Function to format numbers in Indian format
     const formatIndianNumber = (number: number) => {
         return new Intl.NumberFormat('en-IN', {
             maximumFractionDigits: 2,
@@ -27,15 +25,13 @@ const Dashboard: React.FC = () => {
         }).format(number);
     };
 
-    // Sample data for comparison (you can replace this with actual data)
     const comparisonData = [
         { crop: result.best_crop, yield: result.best_yield_per_hectare },
-        { crop: 'Wheat', yield: 25 }, // Replace with actual data
-        { crop: 'Rice', yield: 20 },  // Replace with actual data
-        // Add more crops as necessary
+        { crop: 'Wheat', yield: 25 }, 
+        { crop: 'Rice', yield: 20 },  
+
     ];
 
-    // Prepare data for the Bar chart
     const chartData = {
         labels: comparisonData.map(item => item.crop),
         datasets: [
@@ -67,7 +63,6 @@ const Dashboard: React.FC = () => {
             <Navbar />
             <Container fluid>
                 <Row>
-                    {/* Sidebar */}
                     <Col md={2} className="bg-dark text-white vh-100 p-3">
                         <ListGroup variant="flush">
                             <ListGroup.Item className="bg-dark text-white border-0">
@@ -82,16 +77,14 @@ const Dashboard: React.FC = () => {
                         </ListGroup>
                     </Col>
 
-                    {/* Main Content */}
                     <Col md={10} className="mt-3">
                         <h2 className="mb-4">Dashboard</h2>
                         <Row className="g-4">
-                            {/* Best Crop Card */}
                             <Col md={3}>
                                 <Card className="text-center">
                                     <Card.Body>
                                         <Card.Title className="h4">
-                                            <i className="bi bi-plant-fill"></i> {/* Bootstrap icon */}
+                                            <i className="bi bi-plant-fill"></i>
                                             Best Crop to Grow
                                         </Card.Title>
                                         <Card.Text className="h6">
@@ -101,12 +94,11 @@ const Dashboard: React.FC = () => {
                                 </Card>
                             </Col>
 
-                            {/* Estimated Yield Card */}
                             <Col md={3}>
                                 <Card className="text-center">
                                     <Card.Body>
                                         <Card.Title className="h4">
-                                            <i className="bi bi-graph-up-arrow"></i> {/* Bootstrap icon */}
+                                            <i className="bi bi-graph-up-arrow"></i>
                                             Estimated Yield
                                         </Card.Title>
                                         <Card.Text className="h6">
@@ -116,12 +108,11 @@ const Dashboard: React.FC = () => {
                                 </Card>
                             </Col>
 
-                            {/* Price per Quintal Card */}
                             <Col md={3}>
                                 <Card className="text-center">
                                     <Card.Body>
                                         <Card.Title className="h4">
-                                            <i className="bi bi-cash-stack"></i> {/* Bootstrap icon */}
+                                            <i className="bi bi-cash-stack"></i> 
                                             Price per Quintal
                                         </Card.Title>
                                         <Card.Text className="h6">
@@ -131,12 +122,11 @@ const Dashboard: React.FC = () => {
                                 </Card>
                             </Col>
 
-                            {/* Total Revenue Card */}
                             <Col md={3}>
                                 <Card className="text-center bg-success text-white">
                                     <Card.Body>
                                         <Card.Title className="h4">
-                                            <i className="bi bi-currency-rupee"></i> {/* Bootstrap icon */}
+                                            <i className="bi bi-currency-rupee"></i> 
                                             Estimated Revenue
                                         </Card.Title>
                                         <Card.Text className="h6">
@@ -147,7 +137,6 @@ const Dashboard: React.FC = () => {
                             </Col>
                         </Row>
 
-                        {/* Graph below the cards */}
                         <Row className="mt-4">
                             <Col md={12}>
                                 <Card>

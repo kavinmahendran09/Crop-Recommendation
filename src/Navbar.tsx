@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navbar: React.FC = () => {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark"> {/* Changed to navbar-dark and bg-dark */}
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">CropWise</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

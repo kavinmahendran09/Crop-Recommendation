@@ -8,13 +8,12 @@ const Home: React.FC = () => {
     const navigate = useNavigate();
 
     const handleGetStartedClick = () => {
-        navigate('/user-form'); // Navigate to UserForm page
+        navigate('/user-form'); 
     };
 
     return (
         <div>
             <Navbar />
-            {/* Hero Section */}
             <header className="hero bg-primary text-white text-center py-5">
                 <div className="container">
                     <h1 className="display-4">Welcome to CropWise</h1>
@@ -22,7 +21,6 @@ const Home: React.FC = () => {
                     <button className="btn btn-light btn-lg" onClick={handleGetStartedClick}>Get Started</button>
                 </div>
             </header>
-            {/* Features Section */}
             <section id="features" className="py-5">
                 <div className="container">
                     <h2 className="text-center mb-4">Our Features</h2>
@@ -72,7 +70,6 @@ const Home: React.FC = () => {
                     </div>
                 </div>
             </section>
-            {/* Jumbotron Section */}
             <div className="container">
                 <div className="row">
                     <div className="col-md-6">
@@ -93,9 +90,8 @@ const Home: React.FC = () => {
                     </div>
                 </div>
             </div>
-            {/* Footer */}
             <footer className="bg-light text-center py-4">
-                <p>© 2024 CropWise. All Rights Reserved.</p>
+                <p>CropWise</p>
             </footer>
         </div>
     );

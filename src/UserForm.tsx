@@ -9,38 +9,37 @@ const UserForm: React.FC = () => {
     const [countries, setCountries] = useState<string[]>([]);
     const [states, setStates] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
-    const [selectedCountry, setSelectedCountry] = useState('India'); // Default to India
+    const [selectedCountry, setSelectedCountry] = useState('India'); 
     const [selectedState, setSelectedState] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
-    const [area, setArea] = useState<number | ''>(''); // Area of land
+    const [area, setArea] = useState<number | ''>(''); 
     const [authToken, setAuthToken] = useState('');
 
     const handleBackClick = () => {
         navigate('/');
     };
 
-    // Fetch Access Token
     useEffect(() => {
         const fetchAccessToken = async () => {
             const response = await fetch('https://www.universal-tutorial.com/api/getaccesstoken', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
-                    'api-token': 'bnMxgjRIveTl3xB4FqDTveJsA1ebgJ6ZCo_VBgchrOfkMzhgmgZIszMqlYeahExqQjc', // Replace with your actual API token
-                    'user-email': 'kb7634@srmist.edu.in' // Replace with your actual email
+                    'api-token': 'bnMxgjRIveTl3xB4FqDTveJsA1ebgJ6ZCo_VBgchrOfkMzhgmgZIszMqlYeahExqQjc',
+                    'user-email': 'kb7634@srmist.edu.in' 
                 }
             });
             const data = await response.json();
-            setAuthToken(data.auth_token); // Store the auth token
+            setAuthToken(data.auth_token);
         };
 
         fetchAccessToken();
     }, []);
 
-    // Fetch Countries
+
     useEffect(() => {
         const fetchCountries = async () => {
-            if (!authToken) return; // Ensure auth token is present
+            if (!authToken) return; 
             const response = await fetch('https://www.universal-tutorial.com/api/countries', {
                 method: 'GET',
                 headers: {
@@ -49,16 +48,16 @@ const UserForm: React.FC = () => {
                 }
             });
             const data = await response.json();
-            setCountries(data.map((country: { country_name: string }) => country.country_name)); // Set countries
+            setCountries(data.map((country: { country_name: string }) => country.country_name)); 
         };
 
         fetchCountries();
     }, [authToken]);
 
-    // Fetch States
+
     useEffect(() => {
         const fetchStates = async () => {
-            if (!authToken || !selectedCountry) return; // Ensure auth token and selected country are present
+            if (!authToken || !selectedCountry) return; 
             const response = await fetch(`https://www.universal-tutorial.com/api/states/${selectedCountry}`, {
                 method: 'GET',
                 headers: {
@@ -67,7 +66,7 @@ const UserForm: React.FC = () => {
                 }
             });
             const data = await response.json();
-            setStates(data.map((state: { state_name: string }) => state.state_name)); // Set states
+            setStates(data.map((state: { state_name: string }) => state.state_name)); 
         };
 
         fetchStates();
@@ -76,7 +75,7 @@ const UserForm: React.FC = () => {
     const handleStateChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         const state = event.target.value;
         setSelectedState(state);
-        setSelectedCity(''); // Reset city when state changes
+        setSelectedCity(''); 
 
         if (state) {
             const response = await fetch(`https://www.universal-tutorial.com/api/cities/${state}`, {
@@ -87,15 +86,15 @@ const UserForm: React.FC = () => {
                 }
             });
             const data = await response.json();
-            setCities(data.map((city: { city_name: string }) => city.city_name)); // Set cities
+            setCities(data.map((city: { city_name: string }) => city.city_name)); 
         } else {
-            setCities([]); // Clear cities if no state selected
+            setCities([]); 
         }
     };
 
-    // Handle form submission
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); 
 
         const requestData = {
             city: selectedCity,
@@ -114,8 +113,8 @@ const UserForm: React.FC = () => {
 
             if (response.ok) {
                 const result = await response.json();
-                console.log(result); // Handle the result here (e.g., display in the UI)
-                navigate('/dashboard', { state: { result } }); // Navigate to Dashboard with result
+                console.log(result); 
+                navigate('/dashboard', { state: { result } }); 
             } else {
                 console.error('Error in response:', response.statusText);
             }
@@ -129,7 +128,7 @@ const UserForm: React.FC = () => {
             <Navbar />
             <div className="container mt-5">
                 <h2 className="text-center mb-4">User Information</h2>
-                <form onSubmit={handleSubmit}> {/* Add onSubmit handler */}
+                <form onSubmit={handleSubmit}> 
                     <div className="mb-3">
                         <label htmlFor="country" className="form-label">Select Country</label>
                         <select className="form-select" id="country" value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)}>
