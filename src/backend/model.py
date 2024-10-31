@@ -2,7 +2,6 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
 import joblib
 import datetime
 import os
@@ -48,17 +47,21 @@ joblib.dump(model, os.path.join('src', 'backend', 'model.pkl'))
 joblib.dump(label_enc_crop, os.path.join('src', 'backend', 'label_enc_crop.pkl'))
 joblib.dump(label_enc_month, os.path.join('src', 'backend', 'label_enc_month.pkl'))
 
-# Function to predict best crop based on weather
-def predict_best_crop(temp: float, humidity: float, precipitation: float, month: str) -> tuple:
+# Function to predict best crop based on weather and revenue
+def predict_best_crop(temp: float, humidity: float, precipitation: float, month: str, crop_prices: dict) -> tuple:
     month_encoded = label_enc_month.transform([month])[0]
     crops_yield = {}
 
     for crop in label_enc_crop.classes_:
         crop_encoded = label_enc_crop.transform([crop])[0]
-        X_input = [[crop_encoded, month_encoded, temp, humidity, precipitation]]
+        # Create a DataFrame with correct feature names
+        X_input = pd.DataFrame([[crop_encoded, month_encoded, temp, humidity, precipitation]], 
+                                columns=['Crop', 'Month', 'Temperature', 'Humidity', 'Precipitation'])
         yield_prediction = model.predict(X_input)[0]
         crops_yield[crop] = yield_prediction
 
     best_crop = max(crops_yield, key=crops_yield.get)
     best_yield = crops_yield[best_crop]
-    return best_crop, best_yield
+    best_price = crop_prices.get(best_crop, 0)  # Get price per quintal
+    best_revenue = best_yield * best_price  # Calculate revenue
+    return best_crop, best_yield, best_revenue
